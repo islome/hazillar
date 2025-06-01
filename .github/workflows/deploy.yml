@@ -18,8 +18,9 @@ jobs:
       with:
         node-version: '18'
 
-    - name: Install dependencies
+    - name: Install backend dependencies
       run: npm install
+      working-directory: backend
 
     - name: Build frontend
       run: npm run build --prefix frontend
@@ -49,4 +50,5 @@ jobs:
           npm install
           pm2 restart all || pm2 start index.js --name my-backend
           cd ~/myproject
+          mkdir -p public
           tar -xzf frontend-build.tar.gz -C public
