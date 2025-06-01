@@ -11,7 +11,7 @@ function Questions() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:3500/api/questions')
+    fetch('hhttp://51.21.224.147/api/questions')
       .then((res) => res.json())
       .then((data) => setQuestions(data))
       .catch((err) => console.error('Savollar yuklanmadi:', err));
@@ -20,7 +20,7 @@ function Questions() {
   const handleShowAnswer = async () => {
     if (!showAnswer) {
       setShowAnswer(true);
-      const response = await fetch(`http://localhost:3500/api/questions/${currentQuestionIndex + 1}`);
+      const response = await fetch(`http://51.21.224.147/api/questions/${currentQuestionIndex + 1}`);
       const data = await response.json();
       setAnswers([...answers, { question: questions[currentQuestionIndex].question, answer: data.answer }]);
     } else {

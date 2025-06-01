@@ -11,7 +11,7 @@ function AddQuestion() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:3500/api/questions', {
+      const response = await fetch('http://51.21.224.147/api/questions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
