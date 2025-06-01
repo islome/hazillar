@@ -48,7 +48,7 @@ jobs:
         script: |
           cd ~/myproject/backend
           npm install
-          pm2 restart all || pm2 start index.js --name my-backend
+          pm2 restart all || pm2 start server.js --name my-backend
           cd ~/myproject
           mkdir -p public
           tar -xzf frontend-build.tar.gz -C public
