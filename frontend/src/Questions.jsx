@@ -11,7 +11,7 @@ function Questions() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('hhttp://51.21.224.147/api/questions')
+    fetch('http://51.21.224.147/api/questions')
       .then((res) => res.json())
       .then((data) => setQuestions(data))
       .catch((err) => console.error('Savollar yuklanmadi:', err));
