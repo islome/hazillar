@@ -1,0 +1,52 @@
+name: Deploy to AWS EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build frontend
+      run: npm run build --prefix frontend
+
+    - name: Archive frontend build
+      run: tar -czf frontend-build.tar.gz -C frontend/build .
+
+    - name: Deploy backend and frontend to server
+      uses: appleboy/scp-action@v0.1.5
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ubuntu
+        key: ${{ secrets.EC2_SSH_KEY }}
+        source: |
+          backend/
+          frontend-build.tar.gz
+        target: ~/myproject/
+
+    - name: Connect and restart backend on server
+      uses: appleboy/ssh-action@v0.1.6
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ubuntu
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          cd ~/myproject/backend
+          npm install
+          pm2 restart all || pm2 start index.js --name my-backend
+          cd ~/myproject
+          tar -xzf frontend-build.tar.gz -C public
