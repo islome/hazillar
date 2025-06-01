@@ -12,7 +12,7 @@ app.use(express.json());
 
 
 
-app.get('/api/questions', async (req, res) => {
+app.get('/questions', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM questions');
     res.json(result.rows);
@@ -22,7 +22,7 @@ app.get('/api/questions', async (req, res) => {
   }
 });
 
-app.get('/api/questions/:id', async (req, res) => {
+app.get('/questions/:id', async (req, res) => {
   const id = req.params.id;
   try {
     const result = await pool.query('SELECT answer FROM questions WHERE id = $1', [id]);
@@ -33,7 +33,7 @@ app.get('/api/questions/:id', async (req, res) => {
   }
 });
 
-app.post('/api/questions', async (req, res) => {
+app.post('/questions', async (req, res) => {
   const { question, answer } = req.body;
   if (!question || !answer) {
     return res.status(400).send('Savol va javob kiritilishi shart');
